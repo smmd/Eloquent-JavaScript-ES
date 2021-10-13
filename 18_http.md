@@ -121,10 +121,10 @@ con el _request_.
 
 {{id headers}}
 
-The first line of a request or response may be followed by any number
-of _((header))s_. These are lines in the form `name: value` that
-specify extra information about the request or response. These headers
-were part of the example ((response)):
+La primer linea de un _request_ o _response_ puede ir seguida de cualquier número
+de _((header))s_. Las líneas en formato `name: value` especifican información
+adicional sobre el _request_ o _response_. Estos encabezados son parte del
+((response)) ejemplo:
 
 ```{lang: null}
 Content-Length: 65585
@@ -134,46 +134,47 @@ Last-Modified: Thu, 04 Jan 2018 14:05:30 GMT
 
 {{index "Content-Length header", "Content-Type header", "Last-Modified header"}}
 
-This tells us the size and type of the response document. In this
-case, it is an HTML document of 65,585 bytes. It also tells us when
-that document was last modified.
+Esto nos indica el tamaño y el tipo del documento del _response_.
+En este caso, es un documento HTML de 65.585 bytes. También nos indica
+cuándo se modificó por última vez ese documento.
 
 {{index "Host header", domain}}
 
-For most ((header))s, the client and server are free to decide whether
-to include them in a ((request)) or ((response)). But a few are
-required. For example, the `Host` header, which specifies the
-hostname, should be included in a request because a ((server)) might
-be serving multiple hostnames on a single ((IP address)), and without
-that header, the server won't know which hostname the client is trying
-to talk to.
+El cliente y el servidor son libres de decidir sin incluir o no en un
+((request)) o ((response)) la mayoría de ((header))s. Pero algunos son
+requeridos. Por ejemplo, el encabezado `Host`, que especifica el
+nombre de host, debe incluirse en un request porque un ((servidor)) podría
+estar respondiendo a diferentes nombres de host en una sola ((dirección IP)), y sin
+ese encabezado, el servidor no sabría el nombre del host que el cliente
+intenta contactar.
+
 
 {{index "GET method", "DELETE method", "PUT method", "POST method", "body (HTTP)"}}
 
-After the headers, both requests and responses may include a blank
-line followed by a body, which contains the data being sent. `GET` and
-`DELETE` requests don't send along any data, but `PUT` and `POST`
-requests do. Similarly, some response types, such as error responses,
-do not require a body.
+Después de los encabezados, tanto los requests como loss responses pueden incluir
+una línea en blanco seguida del cuerpo, que contiene los datos que se envían.
+Los requests `GET` y `DELETE` no envían ningún dato, pero los requests
+`PUT` y `POST` sí, De manera similar, algunos tipos de response,
+como las respuestas de error, que no requieren un cuerpo.
 
-## Browsers and HTTP
+## Navegadores y HTTP
 
 {{index HTTP, [file, resource]}}
 
-As we saw in the example, a ((browser)) will make a request when we
-enter a ((URL)) in its ((address bar)). When the resulting HTML page
-references other files, such as ((image))s and JavaScript files,
-those are also retrieved.
+Como vimos en el ejemplo, un navegador hará una solicitud cuando
+ingresemos una ((URL)) en la ((barra de direcciones)). Cuando la página HTML
+resultante hace referencia a otros archivos, como imágenes y archivos JavaScript,
+estos también se recuperan.
 
 {{index parallelism, "GET method"}}
 
-A moderately complicated ((website)) can easily include anywhere from
-10 to 200 ((resource))s. To be able to fetch those quickly, browsers
-will make several `GET` requests simultaneously, rather than waiting
-for the responses one at a time.
+Un ((sitio web)) moderadamente complicado puede incluir fácilmente
+entre 10 y 200 ((recursos)). Para poder obtenerlos rápidamente,
+los navegadores realizarán varias solicitudes `GET` simultáneamente,
+en lugar de esperar las respuestas una a la vez.
 
-HTML pages may include _((form))s_, which allow the user to fill out
-information and send it to the server. This is an example of a form:
+Las páginas HTML pueden incluir  _((form))s_, que permiten al usuario
+completar información y enviarla al servidor. Este es un ejemplo de un formulario:
 
 ```{lang: "text/html"}
 <form method="GET" action="example/message.html">
@@ -185,11 +186,15 @@ information and send it to the server. This is an example of a form:
 
 {{index form, "method attribute", "GET method"}}
 
-This code describes a form with two ((field))s: a small one asking for
-a name and a larger one to write a message in. When you click the Send
-((button)), the form is _submitted_, meaning that the content of its
-field is packed into an HTTP request and the browser navigates to the
-result of that request.
+Este código describe un formulario con dos campos: uno pequeño que
+solicita un nombre y uno más grande para escribir un mensaje.
+Cuando haces clic en el ((botón)) _Enviar_, se envía el formulario,
+lo que significa que el contenido de su campo se empaqueta en un request
+HTTP y el navegador navega hasta el resultado de esa solicitud.
+
+Cuando el método del elemento `<form>` es `GET` (o se omite),
+la información del formulario se agrega al final de la URL de la acción como una cadena de consulta. El navegador puede realizar una solicitud a esta URL:
+
 
 When the `<form>` element's `method` attribute is `GET` (or is
 omitted), the information in the form is added to the end of the
