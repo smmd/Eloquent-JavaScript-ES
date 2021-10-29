@@ -192,14 +192,10 @@ Cuando haces clic en el ((botón)) _Enviar_, se envía el formulario,
 lo que significa que el contenido de su campo se empaqueta en un request
 HTTP y el navegador navega hasta el resultado de esa solicitud.
 
-Cuando el método del elemento `<form>` es `GET` (o se omite),
-la información del formulario se agrega al final de la URL de la acción como una cadena de consulta. El navegador puede realizar una solicitud a esta URL:
-
-
-When the `<form>` element's `method` attribute is `GET` (or is
-omitted), the information in the form is added to the end of the
-`action` URL as a _((query string))_. The browser might make a request
-to this URL:
+Cuando el atributo `method` del elemento `<form>` es `GET` (o se omite),
+la información del formulario es añadida al final del `action` URL
+como una _((query string))_ (cadena de consulta).
+El navegador puede realizar una solicitud a esta URL:
 
 ```{lang: null}
 GET /example/message.html?name=Jean&message=Yes%3F HTTP/1.1
@@ -207,24 +203,24 @@ GET /example/message.html?name=Jean&message=Yes%3F HTTP/1.1
 
 {{index "ampersand character"}}
 
-The ((question mark)) indicates the end of the path part of the URL
-and the start of the query. It is followed by pairs of names and
-values, corresponding to the `name` attribute on the form field
-elements and the content of those elements, respectively. An ampersand
-character (`&`) is used to separate the pairs.
+El signo de interrogación indica el final de la ruta en la URL
+y el inicio de la consulta. Le siguen pares de nombres y valores,
+correspondientes al atributo `name` de los elementos del formulario
+y el valor de estos, respectivamente.
+Se utiliza el carácter `ampersand` (&) para separar los pares.
 
 {{index [escaping, "in URLs"], "hexadecimal number", "encodeURIComponent function", "decodeURIComponent function"}}
 
-The actual message encoded in the URL is "Yes?", but the question mark
-is replaced by a strange code. Some characters in query strings must
-be escaped. The question mark, represented as `%3F`, is one of those.
-There seems to be an unwritten rule that every format needs its own
-way of escaping characters. This one, called _((URL encoding))_, uses
-a ((percent sign)) followed by two hexadecimal (base 16) digits that
-encode the character code. In this case, 3F, which is 63 in decimal
-notation, is the code of a question mark character. JavaScript
-provides the `encodeURIComponent` and `decodeURIComponent` functions
-to encode and decode this format.
+El mensaje codificado en la URL es "¿Sí?", Pero el signo de interrogación
+se reemplaza por un código. Algunos caracteres de las cadenas de consulta
+deben tener formato de escape. El signo de interrogación, representado como `%3F`,
+es un ejemplo de esto. Éxiste una regla no escrita que indica que cada formato
+necesita su propia forma de escapar los caracteres. Este ejemplo, llamado
+_((URL encoding))_ (codificación URL), usa un signo de porcentaje seguido de
+dos dígitos hexadecimales (base 16) que codifican el código del carácter.
+En este caso, 3F, que es 63 en notación decimal, es el código del carácter
+de signo de interrogación. JavaScript proporciona las funciones `encodeURIComponent`
+y `decodeURIComponent` para codificar y decodificar este formato.
 
 ```
 console.log(encodeURIComponent("Yes?"));
@@ -235,10 +231,10 @@ console.log(decodeURIComponent("Yes%3F"));
 
 {{index "body (HTTP)", "POST method"}}
 
-If we change the `method` attribute of the HTML form in the example we
-saw earlier to `POST`, the ((HTTP)) request made to submit the
-((form)) will use the `POST` method and put the ((query string)) in
-the body of the request, rather than adding it to the URL.
+Si cambiamos el atributo `method` en el formulario HTML del ejemplo que vimos
+anteriormente con `POST`, la solicitud ((HTTP)) realizada para enviar el ((form))
+utilizará el método `POST` y colocaría la cadena de consulta en el cuerpo de la
+solicitud, en lugar de agregarla al URL.
 
 ```{lang: http}
 POST /example/message.html HTTP/1.1
@@ -248,16 +244,16 @@ Content-type: application/x-www-form-urlencoded
 name=Jean&message=Yes%3F
 ```
 
-`GET` requests should be used for requests that do not have ((side
-effect))s but simply ask for information. Requests that change
-something on the server, for example creating a new account or posting
-a message, should be expressed with other methods, such as `POST`.
-Client-side software such as a browser knows that it shouldn't blindly
-make `POST` requests but will often implicitly make `GET` requests—for
-example to prefetch a resource it believes the user will soon need.
+Los requests `GET` deben usarse para solicitudes que no tienen efectos secundarios,
+aquellas que simplemente piden información. Las solicitudes que cambian algo en el servidor,
+por ejemplo, la creación de una nueva cuenta o la publicación de un mensaje,
+deben expresarse con otros métodos, como `POST`. El software Client-side (del lado del cliente)
+como los navegadores, sabe que no debe realizar solicitudes `POST` a ciegas, pero a menudo
+realiza solicitudes `GET` implícitamente, por ejemplo, para obtener previamente un
+recurso que el usuario pronto podría necesitar.
 
-We'll come back to forms and how to interact with them from JavaScript
-[later in the chapter](http#forms).
+Volveremos a los formularios y a cómo interactuar entre ellos desde JavaScript
+[más adelante en este capítulo](http#forms).
 
 {{id fetch}}
 
